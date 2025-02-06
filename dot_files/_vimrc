@@ -1,0 +1,62 @@
+" Windows:  $VIM/_vimrc (original)
+
+set nocompatible
+
+set background=dark
+colorscheme evening
+
+let g:xml_syntax_folding = 1
+syntax on
+filetype plugin on
+set foldmethod=syntax
+"bmi syntax
+au BufRead,BufNewFile *.bmi set filetype=bmi
+au BufRead,BufNewFile *.bml set filetype=bmi
+
+"edit large files
+let g:SaveUndoLevels = &undolevels
+let g:BufSizeThreshold = 1000000
+if has("autocmd")
+    " Store preferred undo levels
+    au VimEnter * let g:SaveUndoLevels = &undolevels
+    " Don't use a swap file for big files
+    au BufReadPre * if getfsize(expand("<afile>")) >= g:BufSizeThreshold | setlocal noswapfile | endif
+    " Upon entering a buffer, set or restore the number of undo levels
+    au BufEnter   * if getfsize(expand("<afile>")) < g:BufSizeThreshold | let &undolevels=g:SaveUndoLevels | else | set undolevels=-1 | set ft=none | endif
+endif 
+
+"history and backup
+set history=50
+set backup
+set backupdir=C:\users\carlos\Vim\backup\
+set directory=C:\users\carlos\Vim\swaps\
+set viminfo='10,\"100,:50,%,n~/.viminfo
+
+"tabs
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set noexpandtab
+"end tabs
+set formatoptions=t
+"set textwidth=70
+set encoding=utf-8
+set termencoding=latin1
+set hlsearch
+set guifont=Consolas:h11:cANSI
+set visualbell
+set noerrorbells
+"editor
+set number
+set ruler
+set autoindent
+set smartindent
+set whichwrap=<,>,h,l
+set backspace=2
+set wildmenu
+" matching brackets
+set showmatch
+set matchtime=3
+"gui only
+set guioptions=bgmrL
+
